@@ -1,6 +1,6 @@
 <p align="center">
   <img 
-    src="assets/logo.png"
+    src="assets/logo0.png"
     alt="ICS/OT Network Detection and Response"
     width="600"
   />
