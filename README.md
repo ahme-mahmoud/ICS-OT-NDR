@@ -1,12 +1,17 @@
 <p align="center">
-  <img src="assets/logo0.png" alt="ICS/OT Network Detection and Response Logo" width="450"/>
+  <img 
+    src="assets/logo.png"
+    alt="ICS/OT Network Detection and Response"
+    width="600"
+  />
 </p>
 
 <h1 align="center">ICS/OT Network Detection and Response</h1>
 
 <p align="center">
-  Industrial Cyber Security • Anomaly Detection • Scan & Attack Detection
+  <strong>Industrial Cyber Security • Anomaly Detection • Scan & Attack Detection</strong>
 </p>
+
 
 
 
