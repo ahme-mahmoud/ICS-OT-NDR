@@ -118,6 +118,8 @@ This makes the dataset ideal for **anomaly detection research** in ICS/OT enviro
           Normal
 
 ``` 
+This two-stage architecture first detects abnormal behavior using an unsupervised
+autoencoder, then classifies anomalous traffic into scan or real attack.
 
 
 ---
