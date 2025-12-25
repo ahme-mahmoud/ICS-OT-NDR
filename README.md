@@ -177,7 +177,7 @@ This makes the dataset ideal for **anomaly detection research** in ICS/OT enviro
 - **Programming:** Python  
 - **ML Libraries:** Scikit-learn, TensorFlow / Keras  
 - **Data Processing:** Pandas, NumPy  
-- **Traffic Analysis:** Zeek / PCAP analysis  
+- **Traffic Analysis:** suricata / PCAP analysis  
 - **Model Serialization:** Joblib, Pickle  
 - **Visualization (Planned):** Streamlit  
 - **Backend Integration (Planned):** Flask API  
