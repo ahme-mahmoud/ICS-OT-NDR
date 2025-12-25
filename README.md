@@ -31,7 +31,7 @@ The solution is designed to detect **network scans, anomalies, and real cyber at
 
 ---
 
-## 🎯 Problem Statement
+### 🎯 Problem Statement
 
 ICS/OT networks (power plants, substations, water treatment facilities, manufacturing systems) face unique security challenges:
 
