@@ -84,6 +84,7 @@ This makes the dataset ideal for **anomaly detection research** in ICS/OT enviro
 ---
 
 ## 🏗️ System Architecture
+``` 
 
 ┌────────────────────────────────────┐
 │         Network Traffic            │
@@ -116,6 +117,7 @@ This makes the dataset ideal for **anomaly detection research** in ICS/OT enviro
             ▼
           Normal
 
+``` 
 
 
 ---
