@@ -96,8 +96,12 @@ Is Anomaly?
  Normal    Scan / Attack Classifier
                ↓
            Scan OR Attack
+---
+
+```
 
 The system first detects abnormal behavior using an unsupervised autoencoder, then classifies anomalous traffic into scan or real attack.
+
 ⚙️ Machine Learning Models
 1️⃣ Autoencoder – Anomaly Detection
 
