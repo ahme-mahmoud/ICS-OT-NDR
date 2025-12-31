@@ -12,8 +12,7 @@
   <strong>Industrial Cyber Security • Anomaly Detection • Scan & Attack Detection</strong>
 </p>
 
-
-
+---
 
 # 🚨 ICS/OT Network Detection and Response (ML-Based)
 
@@ -27,11 +26,11 @@ Unlike traditional signature-based IDS solutions, this system focuses on **behav
 - Attack samples are limited or unknown  
 - Availability and safety are critical  
 
-The solution is designed to detect **network scans, anomalies, and real cyber attacks** targeting industrial networks such as **PLC-based systems**.
+The system is designed to detect **network scans, anomalies, and real cyber attacks** targeting industrial networks such as **PLC-based systems**.
 
 ---
 
-### 🎯 Problem Statement
+## 🎯 Problem Statement
 
 ICS/OT networks (power plants, substations, water treatment facilities, manufacturing systems) face unique security challenges:
 
@@ -48,14 +47,14 @@ ICS/OT networks (power plants, substations, water treatment facilities, manufact
 To address these challenges, this project implements a **two-stage ML-based detection pipeline**:
 
 ### 1️⃣ Anomaly Detection  
-Learns **only normal behavior** and detects any deviation.
+Learns **only normal behavior** and flags any deviation as suspicious.
 
 ### 2️⃣ Attack Classification  
 Classifies anomalous traffic into:
-- **Network Scans** (e.g., Nmap)
+- **Network Scans** (e.g., Nmap reconnaissance)
 - **Real Attacks** (Hijacking, MAC flooding, TCPKill, etc.)
 
-This architecture is well-suited for ICS/OT environments, where detecting **abnormal behavior** is more important than matching predefined signatures.
+This architecture is well-suited for ICS/OT environments, where detecting **abnormal behavior** is more critical than matching predefined attack signatures.
 
 ---
 
@@ -84,147 +83,144 @@ This makes the dataset ideal for **anomaly detection research** in ICS/OT enviro
 ---
 
 ## 🏗️ System Architecture
-``` 
 
-┌────────────────────────────────────┐
-│         Network Traffic            │
-└───────────────┬────────────────────┘
-                │
-                ▼
-┌────────────────────────────────────┐
-│  Feature Extraction (Flow-Level)   │
-└───────────────┬────────────────────┘
-                │
-                ▼
-┌────────────────────────────────────┐
-│ Autoencoder (Trained on Normal)    │
-└───────────────┬────────────────────┘
-                │
-                ▼
-┌───────────────────────────────────┐
-│            Is Anomaly ?           │
-└───────────┬───────────┬───────────┘
-            │           │
-            │           ▼
-            │   ┌──────────────────┐
-            │   │ Scan / Attack    │
-            │   │   Classifier     │
-            │   └─────────┬────────┘
-            │             │
-            │             ▼
-            │      Scan OR Attack
-            │
-            ▼
-          Normal
+```text
+Network Traffic
+      ↓
+Feature Extraction (Flow-Level)
+      ↓
+Autoencoder (Trained on Normal Only)
+      ↓
+Is Anomaly?
+   ↓           ↓
+ Normal    Scan / Attack Classifier
+               ↓
+           Scan OR Attack
 
-``` 
-This two-stage architecture first detects abnormal behavior using an unsupervised
-autoencoder, then classifies anomalous traffic into scan or real attack.
+The system first detects abnormal behavior using an unsupervised autoencoder, then classifies anomalous traffic into scan or real attack.
+⚙️ Machine Learning Models
+1️⃣ Autoencoder – Anomaly Detection
 
+Type: Deep Learning (Unsupervised)
 
----
+Training Data: Pure normal traffic only
 
-## ⚙️ Machine Learning Models
+Detection Method: Reconstruction error
 
-### 1️⃣ Autoencoder – Anomaly Detection
-- **Type:** Deep Learning (Unsupervised)
-- **Training Data:** Pure normal traffic only
-- **Detection Method:** Reconstruction error
-- **Purpose:** Detect deviations from learned normal behavior
-- **Strength:** Detects unknown and zero-day attacks
+Purpose: Detect deviations from learned normal behavior
 
----
+Strength: Detects unknown and zero-day attacks
 
-### 2️⃣ Scan vs Attack Classifier
-- **Type:** Supervised ML classifier
-- **Input:** Only anomalous flows
-- **Output:** Scan or Real Attack
-- **Purpose:** Reduce false alarms and provide meaningful attack context
+2️⃣ Scan vs Attack Classifier
 
----
+Type: Supervised ML classifier
 
-## 📂 Project Pipeline
+Input: Only anomalous flows
 
-- PCAP traffic ingestion  
-- Feature extraction (flow-level statistics)  
-- Data cleaning and preprocessing  
-- Model training (normal-only learning)  
-- Threshold calculation for anomaly detection  
-- Full dataset inference  
-- Scan vs Attack classification  
-- Export results for backend integration  
+Output: Scan or Real Attack
 
----
+Purpose: Reduce false alarms and provide meaningful attack context
 
-## 🧪 Evaluation Metrics
+📂 Project Pipeline
 
-- Accuracy  
-- Precision / Recall  
-- F1-score  
-- Confusion Matrix  
-- ROC-AUC  
+PCAP traffic ingestion
 
-### Expected Performance (Based on Experiments)
+Feature extraction (flow-level statistics)
 
-| Model              | Expected Accuracy |
-|--------------------|-------------------|
-| Isolation Forest   | 70% – 85%         |
-| Autoencoder        | 80% – 92%         |
-| Two-Stage Pipeline | Up to ~95%        |
+Data cleaning and preprocessing
 
----
+Model training (normal-only learning)
 
-## 🛠️ Tools & Technologies
+Threshold calculation for anomaly detection
 
-- **Programming:** Python  
-- **ML Libraries:** Scikit-learn, TensorFlow / Keras  
-- **Data Processing:** Pandas, NumPy  
-- **Traffic Analysis:** suricata / PCAP analysis  
-- **Model Serialization:** Joblib, Pickle  
-- **Visualization (Planned):** Streamlit  
-- **Backend Integration (Planned):** Flask API  
+Full dataset inference
 
----
+Scan vs Attack classification
 
-## 🔌 Backend Integration
+Export results for backend and dashboard integration
 
-### Input Requirements
+🧪 Evaluation Metrics
 
-The backend must send **flow-level features** in the same format and order used during training:
+Accuracy
 
-1. `flow_durat`  
-2. `pkts_toserver`  
-3. `pkts_toclient`  
-4. `bytes_toserver`  
-5. `bytes_toclient`  
-6. `src_port`  
-7. `dst_port`  
+Precision / Recall
 
-### Output
+F1-score
 
-The ML pipeline returns **one label per flow**:
+Confusion Matrix
 
-- `normal`
-- `scan`
-- `attack`
+ROC-AUC
 
----
+Expected Performance (Based on Experiments)
+Model	Expected Accuracy
+Isolation Forest	70% – 85%
+Autoencoder	80% – 92%
+Two-Stage Pipeline	Up to ~95%
+🛠️ Tools & Technologies
 
-## 🚀 Future Work
+Programming: Python
 
-- Real-time traffic ingestion  
-- Backend REST API for live detection  
-- Interactive dashboard for alerts and analytics  
-- Support for additional OT protocols (IEC-104, DNP3)  
-- Ensemble and hybrid anomaly detection models  
-- Deployment in real industrial testbeds  
+ML Libraries: Scikit-learn, TensorFlow / Keras
 
----
+Data Processing: Pandas, NumPy
 
-## 📚 References
+Traffic Analysis: Suricata / PCAP analysis
 
-- Cyber4OT Dataset – SoftwareX (2025)  
-- ICS/OT Security Research Literature  
-- Anomaly Detection in Industrial Networks  
-- NIST Cybersecurity Framework  
-- IEC 62443 Industrial Security Standard  
+Model Serialization: Joblib, Pickle
+
+Backend: Flask API
+
+Dashboard: Streamlit
+
+🔌 Backend Integration
+Input Requirements
+
+The backend must send flow-level features in the same format and order used during training:
+
+flow_durat
+
+pkts_toserver
+
+pkts_toclient
+
+bytes_toserver
+
+bytes_toclient
+
+src_port
+
+dst_port
+
+Output
+
+The ML pipeline returns one label per flow:
+
+normal
+
+scan
+
+attack
+
+🚀 Future Work
+
+Real-time traffic ingestion
+
+Advanced dashboard analytics and alerting
+
+Support for additional OT protocols (IEC-104, DNP3)
+
+Ensemble and hybrid anomaly detection models
+
+Deployment in real industrial testbeds
+
+📚 References
+
+Cyber4OT Dataset – SoftwareX (2025)
+
+ICS/OT Security Research Literature
+
+Anomaly Detection in Industrial Networks
+
+NIST Cybersecurity Framework
+
+IEC 62443 Industrial Security Standard
